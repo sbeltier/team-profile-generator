@@ -5,23 +5,27 @@ const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 
+// Read in template file contents
+let fileContents = fs.readFileSync('./src/index_template.html');
+// Write new generated html with template header contents
+fs.writeFileSync('./src/index_generated.html', fileContents);
 
 // Questions to ask all employees
 const generalQuestions = [
     {
         type: 'input',
         message: "What is this employee's name?",
-        name: 'name',
+        name: 'name'
     },
     {
         type: 'input',
         message: "What is this employee's ID number?",
-        name: 'id',
+        name: 'id'
     },
     {
         type: 'input',
         message: "What is this employee's email?",
-        name: 'email',
+        name: 'email'
     },
     {
         type: 'list',
@@ -32,7 +36,7 @@ const generalQuestions = [
             'Engineer',
             'Intern'
         ]
-    },
+    }
 ]
 
 // Questions to ask for a Manager
@@ -58,7 +62,7 @@ const engineerQuestion = [
     {
         type: 'input',
         message: "What is this engineer's Github username?",
-        name: 'github',
+        name: 'github'
     },
     {
         type: 'list',
@@ -104,13 +108,16 @@ function addTeam() {
                         console.log(newEmployee)
                         // Restart function if there are more employees to add
                         if (managerResponse.continue == 'No') {
-                            // writeFile Function
+                            // Add last employee
                             newEmployee.addManagerCard(this.name, this.id, this.email, this.officeNumber);
-                            console.log('No more members to add')
+                            // Close HTML Code
+                            fs.appendFile('./src/index_generated.html', `</div>\n</body>\n</html>`, (err) => {
+                                (err) ? console.log('error with close HTML code') : console.log('HTML code closed')
+                                })
                         }
+                        // Add Employee and Restart Inquirer                        
                         else {
-                            newEmployee.addManagerCard(name, id, email, officeNumber);
-                            
+                            newEmployee.addManagerCard(this.name, this.id, this.email, this.officeNumber);
                             addTeam();
                         }
                     })
@@ -122,10 +129,16 @@ function addTeam() {
                         const newEmployee = new Engineer(response.name, response.id, response.email, engineerResponse.github)
                         console.log(newEmployee)
                         if (engineerResponse.continue == 'No') {
-                            // writeFile Function
-                            console.log('No more members to add')
+                            // Add last employee
+                            newEmployee.addEngineerCard(this.name, this.id, this.email, this.github);
+                            // Close HTML Code
+                            fs.appendFile('./src/index_generated.html', `</div>\n</body>\n</html>`, (err) => {
+                                (err) ? console.log('error with close HTML code') : console.log('HTML code closed')
+                                })
                         }
+                        // Add Employee and Restart Inquirer                        
                         else {
+                            newEmployee.addEngineerCard(this.name, this.id, this.email, this.github);                            
                             addTeam();
                         }
                     })
@@ -137,11 +150,16 @@ function addTeam() {
                         const newEmployee = new Intern(response.name, response.id, response.email, internResponse.school)
                         console.log(newEmployee)                    
                         if (internResponse.continue == 'No') {
-                            // writeFile Function
-                            console.log('No more members to add')
-
+                            // Add last employee
+                            newEmployee.addInternCard(this.name, this.id, this.email, this.school);
+                            // Close HTML Code
+                            fs.appendFile('./src/index_generated.html', `</div>\n</body>\n</html>`, (err) => {
+                                (err) ? console.log('error with close HTML code') : console.log('HTML code closed')
+                                })
                         }
+                        // Add Employee and Restart Inquirer                        
                         else {
+                            newEmployee.addInternCard(this.name, this.id, this.email, this.school);
                             addTeam();
                         }
                     })
