@@ -25,6 +25,8 @@ There are currently 3 roles that exist: manager, engineer, and intern. The user 
 
 After the first employee is added, a file called "index_generated.html" will be created and contain all the information. As the user continues to add new employees, the template will continue to update with the information provided.
 
+See the walkthrough video [here](https://drive.google.com/file/d/1Nyt0TCxj-_piyWA_RR6bcqy6s7e2Lf17/view?usp=sharing).
+
 ### Installation
 This Team Profile Generator runs on Node.js and uses the npm packages Inquirer and Jest
 
